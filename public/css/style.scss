@@ -1,0 +1,415 @@
+// Define color variables for consistent styling
+$bg-color: #f4f4f9;
+$primary-color: #007bff;
+$secondary-color: #0056b3;
+$completed-color: #d4edda; // Greenish background for completed tasks
+$completed-text-color: #155724;
+$button-bg: #28a745;
+$button-hover-bg: darken($button-bg, 10%);
+$button-disabled-bg: #ccc;
+$text-color: #fff;
+$font-size: 1rem;
+$font-size-large: 1.1rem;
+$container-width: 600px;
+$input-bg: #fff;
+$border-color: #ddd;
+
+// Priority colors
+$priority-low: #d1ecf1;
+$priority-medium: #fff3cd;
+$priority-high: #f8d7da;
+
+// General reset
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+// Center the body content
+body {
+    font-family: Arial, sans-serif;
+    background-color: $bg-color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #333;
+}
+
+// Container for the to-do app
+.container {
+    width: 100%;
+    max-width: $container-width;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin: 20px;
+}
+
+// Headings
+h1, h2 {
+    color: #444;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+}
+
+// Form styling with improved button readability
+.form-container {
+    margin-bottom: 50px;
+
+    form {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    input[type="text"], select {
+        padding: 10px;
+        border: 1px solid $border-color;
+        border-radius: 5px;
+        font-size: $font-size;
+        flex: 2;
+        background-color: $input-bg;
+
+        &:focus {
+            outline: none;
+            border-color: $primary-color;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+    }
+
+    button {
+        padding: 10px 20px;
+        background-color: $primary-color;
+        color: $text-color;
+        border: none;
+        border-radius: 5px;
+        font-size: $font-size-large;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+        min-width: 120px;
+
+        &:hover {
+            background-color: $secondary-color;
+            transform: translateY(-2px);
+        }
+
+        &:active {
+            transform: translateY(1px);
+        }
+
+        &:disabled {
+            background-color: $button-disabled-bg;
+            cursor: not-allowed;
+        }
+    }
+}
+
+// Task styling with priority colors and completed styling
+.tasks-container {
+    margin-top: 20px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    margin: 10px 0;
+    background-color: #f5f5f5;
+    border: 1px solid $border-color;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+
+    &:hover {
+        background-color: #f0f0f0;
+    }
+    
+    &.completed {
+        text-decoration: line-through;
+        background-color: $completed-color;
+    }
+
+    .task-name {
+        font-weight: bold;
+        flex: 2;
+    }
+
+    .task-priority {
+        font-size: 0.9rem;
+        flex: 1;
+        color: #777;
+    }
+
+    .task-actions {
+        display: flex;
+        gap: 10px;
+
+        button {
+            padding: 5px 10px;
+            font-size: 0.9rem;
+            min-width: 90px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: 1px solid $border-color;
+
+            &:hover {
+                background-color: $primary-color;
+                color: $text-color;
+                transform: translateY(-2px);
+            }
+
+            &:disabled {
+                background-color: $button-disabled-bg;
+                cursor: not-allowed;
+            }
+
+            &:first-child {
+                background-color: $button-bg;
+                color: $text-color;
+                border-color: $button-bg;
+            }
+
+            &:last-child {
+                background-color: #dc3545;
+                border-color: #dc3545;
+                color: #fff;
+
+                &:hover {
+                    background-color: darken(#dc3545, 10%);
+                }
+            }
+        }
+    }
+}
+
+// Priority styles
+.task-item[data-priority="1"] {
+    border-left: 5px solid green;  /* Low priority */
+}
+
+.task-item[data-priority="2"] {
+    border-left: 5px solid orange;  /* Medium priority */
+}
+
+.task-item[data-priority="3"] {
+    border-left: 5px solid red;  /* High priority */
+}
+
+// Stats section
+.stats {
+    color: #444;
+    margin-top: 20px;
+
+    p {
+        margin: 5px 0;
+    }
+
+    strong {
+        color: #007bff;
+    }
+}
+
+// Status message styling
+.status-message {
+    margin: 20px 0;
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    &.success {
+        background-color: #d4edda;
+        color: #155724;
+    }
+
+    &.error {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+
+    &.deleted {
+        background-color: #f0f0f0;
+        color: #856404;
+    }
+
+    &.completed {
+        background-color: #cce5ff;
+        color: #004085;
+    }
+
+    &.invalid {
+        background-color: #fff3cd;
+        color: #856404;
+    }
+
+    .status-icon {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: currentColor;
+    }
+
+    p {
+        margin: 0;
+        font-weight: bold;
+    }
+}
+
+.btn-add-task{
+    padding: 12px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    margin-top: 10px;
+    flex: 1;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+button[type="submit"]:focus {
+    outline: none;
+    box-shadow: 0 0 5px #007bff;
+}
+
+select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-right: 10px;
+    font-size: 1rem;
+    flex: 1; /* This ensures it takes up equal space with the other elements */
+    max-width: 150px; /* Adjust the maximum width */
+}
+
+form {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 100%;
+}
+
+input[type="text"], select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-right: 10px;
+    font-size: 1rem;
+    flex: 2;
+}
+
+input[type="text"]:first-child {
+    flex: 3;
+}
+
+select:last-child {
+    flex: 1;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Modal content */
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+/* Button styles */
+.btn-confirm, .btn-cancel {
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-confirm {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.btn-cancel {
+    background-color: #f44336;
+    color: white;
+}
+
+.pagination {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.pagination a, .pagination span {
+    display: inline-block;
+    padding: 8px 16px;
+    margin: 0 4px;
+    text-decoration: none;
+    color: #007BFF;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.pagination a:hover {
+    background-color: #ddd;
+}
+
+.pagination .current-page {
+    background-color: #007BFF;
+    color: white;
+    border: 1px solid #007BFF;
+}
+
+.pagination {
+    margin-top: 20px;
+    text-align: center;
+
+    a, span {
+        display: inline-block;
+        padding: 8px 16px;
+        margin: 0 4px;
+        text-decoration: none;
+        color: #007BFF;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    a:hover {
+        background-color: #ddd;
+    }
+
+    .current-page {
+        background-color: #007BFF;
+        color: white;
+        border: 1px solid #007BFF;
+    }
+}
